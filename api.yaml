@@ -1,0 +1,157 @@
+openapi: 3.0.1
+info:
+  title: Books Api
+  description: This is Books api made with fastapi and mongodb
+  version: 1.0.0
+host: "http://127.0.0.1:8000/"
+tags:
+  - name: books
+    description: Crud with Books
+paths:
+  /:
+    get:
+      tags:
+        - book
+      summary: Read book
+      operationId: get_books
+      responses:
+        200:
+          description: Books data retrieved successfully
+          content: {}
+        404:
+          description: Failed to read books
+          content: {}
+    put:
+      tags:
+        - book
+      summary: Update book
+      operationId: update_book_data
+      requestBody:
+        description: Update book data from the database
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Book"
+        required: true
+      responses:
+        200:
+          description: Book deleted successfully
+          content: {}
+        404:
+          description: Book Not Found
+          content: {}
+    post:
+      tags:
+        - book
+      summary: Add a new book
+      operationId: add_book_data
+      requestBody:
+        description: Book data added into the database
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBook"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/UpdateBook"
+        required: true
+      responses:
+        200:
+          description: Book added successfully.
+          content: {}
+  /{id}:
+    get:
+      tags:
+        - book
+      summary: Finds book by id
+      operationId: get_book_data
+      parameters:
+        - name: id
+          in: path
+          description: Id value that need to be considered for filter
+          required: true
+          # style: form
+          # explode: true
+          schema:
+            $ref: "#/components/schemas/UpdateBook"
+      responses:
+        200:
+          description: book data retrieved successfully
+          content: {}
+        404:
+          description: "Failed to fetch book"
+          content: {}
+      # security:
+      #   - petstore_auth:
+      #       - write:pets
+      #       - read:pets
+    delete:
+      tags:
+        - book
+      summary: Delete book by id
+      operationId: delete_book_data
+      parameters:
+        - name: id
+          in: path
+          description: Id value that need to delete the book
+          required: true
+          # style: form
+          # explode: true
+          schema:
+            $ref: "#/components/schemas/deletebook"
+      responses:
+        200:
+          description: Book deleted successfully
+          content: {}
+        404:
+          description: "Failed to fetch book"
+          content: {}
+components:
+  schemas:
+    deletebook:
+      required:
+        - id
+      type: integer
+      properties:
+        id:
+          type: integer
+          format: int64
+    UpdateBook:
+      required:
+          - id
+      type: integer
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        author:
+          type: string
+        description: 
+          type: string
+        rating: 
+          type: integer
+    Book:
+      required:
+          - id
+          - title
+          - description
+          - author
+          - rating
+      type: integer
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        author:
+          type: string
+        description: 
+          type: string
+        rating: 
+          type: integer
